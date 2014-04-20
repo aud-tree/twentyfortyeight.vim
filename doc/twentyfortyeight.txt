@@ -1,0 +1,31 @@
+*twentyfortyeight.txt* *2048.txt*  Play 2048 in your Vim
+
+------------------------------------------------------------------------------
+~~ Introduction ~~                                       *twentyfortyeight* *2048*
+
+This plugin is 2048 (http://gabrielecirulli.github.io/2048/) for Vim,
+implemented completely in Vimscript. Type :Play2048<cr> or <Leader>20 to play!
+
+------------------------------------------------------------------------------
+~~ Commands ~~                         *twentyfortyeight-commands* *2048-commands*
+
+:Play2048                                                      *:Play2048* *:2048*
+
+   Open a new tab to play 2048.
+
+------------------------------------------------------------------------------
+~~ Mappings ~~                         *twentyfortyeight-mappings* *2048-mappings*
+
+<Leader>20               Alias for :Play2048.
+
+In game:
+i                        Move tiles up
+j                        Move tiles left
+k                        Move tiles down
+l                        Move tiles right
+r                        Reset game
+q                        Quit
+
+------------------------------------------------------------------------------
+Author:  Audrey Schwarz <acbschwarz@gmail.com>         *twentyfortyeight-author*
+License: Same as Vim itself (see |license|)
