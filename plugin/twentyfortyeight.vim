@@ -1,6 +1,6 @@
 "2048 in pure, beautiful Vimscript. Because why the fuck not.
 
-function! TwentyFortyEight()
+function! s:TwentyFortyEight()
   execute "tabnew 2048 |
     \nnoremap <buffer> <silent> i :call <SID>ProcessMove(-4)\<cr> |
     \nnoremap <buffer> <silent> k :call <SID>ProcessMove(4)\<cr> |
@@ -48,8 +48,8 @@ function! s:Draw()
     let l:board = substitute(l:board, '{' . i . '\s*}', printf('%4s', s:tiles[i]), '')
   endfor
 
-  let @d = l:board
-  execute 'normal! ggdG"dPG0'
+  let @b = l:board
+  execute 'normal! ggdG"bPG0'
 endfunction
 
 "dir: -4 = up, 4 = down, -1 = left, 1 = right (obviously)
@@ -70,7 +70,7 @@ function! s:ProcessMove(dir)
       let l:target = l:current + a:dir
 
       "If it isn't going to fall off the board
-      if (abs(a:dir) == 1 && s:IsInSameRow(l:target, l:current)) || (abs(a:dir) == 4 && l:target >= 0 && l:target < len(s:tiles))
+      if s:TargetIsOnBoard(l:target, l:current, a:dir)
         "Blank tile, move in
         if s:tiles[l:target] == ''
           let s:tiles[l:target] = s:tiles[l:current]
@@ -108,6 +108,10 @@ endfunction
 
 function! s:IsNotDoubled(doubledList, i)
   return len(filter(deepcopy(a:doubledList), "v:val == " . a:i)) == 0
+endfunction
+
+function! s:TargetIsOnBoard(target, current, dir)
+  return (abs(a:dir) == 1 && s:IsInSameRow(a:target, a:current)) || (abs(a:dir) == 4 && a:target >= 0 && a:target < len(s:tiles))
 endfunction
 
 function! s:IsInSameRow(target, index)
@@ -148,4 +152,7 @@ function! s:YouWin()
   let s:tiles = ['', '', '', '', 'Y', 'O', 'U', '', 'W', 'I', 'N', '!', '', '', '', '']
   call s:Draw()
 endfunction
+
+command! Play2048 :call <SID>TwentyFortyEight()
+nnoremap <leader>20 :Play2048<cr>
 
