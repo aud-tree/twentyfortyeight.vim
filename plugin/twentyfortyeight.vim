@@ -145,7 +145,7 @@ function! s:Rand(max)
 endfunction
 
 function! s:TwoOrFour()
-  let l:rand = s:Rand(5)
+  let l:rand = s:Rand(11)
   if l:rand == 0
     return 4
   endif
