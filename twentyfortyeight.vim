@@ -7,7 +7,8 @@ function! TwentyFortyEight()
     \nnoremap <buffer> <silent> j :call <SID>ProcessMove(-1)\<cr> |
     \nnoremap <buffer> <silent> l :call <SID>ProcessMove(1)\<cr> |
     \nnoremap <buffer> <silent> r :call <SID>ResetTiles()\<cr>:call <SID>Draw()\<cr> |
-    \nnoremap <buffer> <silent> q :bd!\<cr>"
+    \nnoremap <buffer> <silent> q :bd!\<cr> |
+    \setlocal ft=vim"
   call s:SetupTiles()
 endfunction
 
@@ -40,8 +41,8 @@ function! s:Draw()
     \|      |      |      |      |\n
     \+------+------+------+------+\n
     \\n
-    \  Controls:   i\n
-    \            j k l"
+    \  Controls:   i      r: Reset\n
+    \            j k l    q: Quit"
 
   for i in range(0, len(s:tiles) - 1)
     let l:board = substitute(l:board, '{' . i . '\s*}', printf('%4s', s:tiles[i]), '')
