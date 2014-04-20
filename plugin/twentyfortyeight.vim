@@ -6,7 +6,7 @@ function! s:TwentyFortyEight()
     \nnoremap <buffer> <silent> k :call <SID>ProcessMove(4)\<cr> |
     \nnoremap <buffer> <silent> j :call <SID>ProcessMove(-1)\<cr> |
     \nnoremap <buffer> <silent> l :call <SID>ProcessMove(1)\<cr> |
-    \nnoremap <buffer> <silent> r :call <SID>ResetTiles()\<cr>:call <SID>Draw()\<cr> |
+    \nnoremap <buffer> <silent> r :call <SID>SetupTiles()\<cr>:call <SID>Draw()\<cr> |
     \nnoremap <buffer> <silent> q :bd!\<cr> |
     \setlocal ft=vim"
   call s:SetupTiles()
@@ -42,7 +42,7 @@ function! s:Draw()
     \+------+------+------+------+\n
     \\n
     \  Controls:   i      r: Reset\n
-    \            j k l    q: Quit"
+    \            j k l    q: Quit\n"
 
   for i in range(0, len(s:tiles) - 1)
     let l:board = substitute(l:board, '{' . i . '\s*}', printf('%4s', s:tiles[i]), '')
@@ -145,7 +145,11 @@ function! s:Rand(max)
 endfunction
 
 function! s:TwoOrFour()
-  return (s:Rand(2) + 1) * 2
+  let l:rand = s:Rand(5)
+  if l:rand == 0
+    return 4
+  endif
+  return 2
 endfunction
 
 function! s:YouWin()
