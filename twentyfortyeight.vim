@@ -1,11 +1,17 @@
 "2048 in pure, beautiful Vimscript. Because why the fuck not.
 
 function! TwentyFortyEight()
-  execute "normal! :tabnew\<cr>
-    \:nnoremap <buffer> <silent> i :call <SID>ProcessMove(-4)\\<cr>\<cr>
-    \:nnoremap <buffer> <silent> k :call <SID>ProcessMove(4)\\<cr>\<cr>
-    \:nnoremap <buffer> <silent> j :call <SID>ProcessMove(-1)\\<cr>\<cr>
-    \:nnoremap <buffer> <silent> l :call <SID>ProcessMove(1)\\<cr>\<cr>"
+  execute "tabnew 2048 |
+    \nnoremap <buffer> <silent> i :call <SID>ProcessMove(-4)\<cr> |
+    \nnoremap <buffer> <silent> k :call <SID>ProcessMove(4)\<cr> |
+    \nnoremap <buffer> <silent> j :call <SID>ProcessMove(-1)\<cr> |
+    \nnoremap <buffer> <silent> l :call <SID>ProcessMove(1)\<cr> |
+    \nnoremap <buffer> <silent> r :call <SID>ResetTiles()\<cr>:call <SID>Draw()\<cr> |
+    \nnoremap <buffer> <silent> q :bd!\<cr>"
+  call s:SetupTiles()
+endfunction
+
+function! s:SetupTiles()
   let s:tiles = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']
   call s:GenerateNew()
   call s:GenerateNew()
@@ -141,3 +147,4 @@ function! s:YouWin()
   let s:tiles = ['', '', '', '', 'Y', 'O', 'U', '', 'W', 'I', 'N', '!', '', '', '', '']
   call s:Draw()
 endfunction
+
