@@ -48,6 +48,7 @@ endfunction
 "dir: -4 = up, 4 = down, -1 = left, 1 = right (obviously)
 function! s:ProcessMove(dir)
   let l:oldState = deepcopy(s:tiles)
+  let l:doubled = []
 
   let l:indeces = range(0, len(s:tiles) - 1)
   if a:dir > 0
@@ -67,9 +68,10 @@ function! s:ProcessMove(dir)
         if s:tiles[l:target] == ''
           let s:tiles[l:target] = s:tiles[l:current]
           let s:tiles[l:current] = ''
-        "Matching tile, double into it
-        elseif s:tiles[l:target] == s:tiles[l:current]
+        "Matching tile, double into it if we haven't done so this move
+        elseif s:tiles[l:target] == s:tiles[l:current] && s:IsNotDoubled(l:doubled, l:target)
           let s:tiles[l:target] = string(s:tiles[l:current] * 2)
+          call add(l:doubled, l:target)
           let s:tiles[l:current] = ''
           let l:keepGoing = 0
           if s:tiles[l:target] == '2048'
@@ -95,6 +97,10 @@ function! s:ProcessMove(dir)
     call s:GenerateNew()
   endif
   call s:Draw()
+endfunction
+
+function! s:IsNotDoubled(doubledList, i)
+  return len(filter(deepcopy(a:doubledList), "v:val == " . a:i)) == 0
 endfunction
 
 function! s:IsInSameRow(target, index)
